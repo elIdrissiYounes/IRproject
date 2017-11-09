@@ -62,8 +62,9 @@ class main {
         
         File fQueries = new File("/home/younes/workspaceEE/riProject/topic.txt");
         int j=0;
-     for(j=0;j<6;j++){
-    	 String string="/home/younes/workspaceEE/SimpleTextSearch-master/IbrahimAlexisKevinYouness_"+"02_"+j+"_ltn_"+"articles"+".txt";
+        // a enlever
+     for(j=0;j<1;j++){
+    	 String string="/home/younes/workspaceEE/SimpleTextSearch-master/IbrahimAlexisKevinYouness_"+"03_"+j+"_cosine_"+"articles"+".txt";
         File sortiee = new File(string);
         
         LineIterator it = FileUtils.lineIterator(fQueries, "UTF-8");
@@ -73,17 +74,17 @@ class main {
  			String line = it.nextLine();
  			sw.reset();
             sw.start();
- 			SearchResultBatch batch = index.search(line, 7*1500);
+ 			SearchResultBatch batch = index.search(line, 1500);
  			sw.stop();
  			System.out.println("printing results for query: " + line);
  			int rank=1;
  			for (SearchResult result : batch.getSearchResults()) {
  				String[] arr=line.split(" ",2);
- 				String linee = arr[0]+ "" + " Q0 "+result.getUniqueIdentifier() +" "+ rank + " " + result.getLtn() + " "
+ 				String linee = arr[0]+ "" + " Q0 "+result.getUniqueIdentifier() +" "+ rank + " " + result.getRelevanceScoreCosine() + " "
  						+ "IbrahimAlexisKevinYouness" + " " + "/article[1]\n";
                  System.out.println("----------\n\n");
                  FileUtils.write(sortiee, linee, "UTF-8", true);
-                 System.out.println("score = " + result.getRelevanceScore());
+                 System.out.println("score = " + result.getRelevanceScoreCosine());
                  System.out.println("ltn = " + result.getLtn());
                  System.out.println("ltc = " + result.getLtc());
                  rank++;
@@ -92,6 +93,8 @@ class main {
  	            System.out.println("num documents searched: " + batch.getStats().getDocumentsSearched());
 
  		}
+         
+         System.out.println("End");
      }
          finally {
  			LineIterator.closeQuietly(it);

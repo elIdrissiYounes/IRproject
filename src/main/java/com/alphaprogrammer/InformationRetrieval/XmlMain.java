@@ -86,7 +86,7 @@ class XmlMain {
     						+ "IbrahimAlexisKevinYouness" + " " + "/article[1]\n";
                     System.out.println("----------\n\n");
                     FileUtils.write(sortiee, linee, "UTF-8", true);
-                    System.out.println("score = " + result.getRelevanceScore());
+                    System.out.println("score = " + result.getRelevanceScoreCosine());
                     System.out.println("ltn = " + result.getLtn());
                     System.out.println("ltc = " + result.getLtc());
                     rank++;

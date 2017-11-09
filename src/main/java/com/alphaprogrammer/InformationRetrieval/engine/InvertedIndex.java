@@ -103,7 +103,7 @@ public class InvertedIndex implements TextSearchIndex {
                         result.setLtn(ltn);
                         result.setLtc(ltc);
                         //QId?
-                        result.setRelevanceScore(cosine);
+                        result.setRelevanceScoreCosine(cosine);
                         result.setUniqueIdentifier(doc.getUniqueId());
                         resultsP.add(result);
                     }
@@ -127,7 +127,7 @@ public class InvertedIndex implements TextSearchIndex {
                 orderedBy(new Comparator<SearchResult>() {
                     @Override
                     public int compare(SearchResult o1, SearchResult o2) {
-                        if (o1.getLtn() <= o2.getLtn()) {
+                        if (o1.getRelevanceScoreCosine() <= o2.getRelevanceScoreCosine()) {
                             return 1;
                         } else {
                             return -1;

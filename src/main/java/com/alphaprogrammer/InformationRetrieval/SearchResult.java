@@ -6,10 +6,19 @@ package com.alphaprogrammer.InformationRetrieval;
 public class SearchResult {
 	private double ltn;
 	private double ltc;
+	private double bm25;
 
-	private double relevanceScore;
+	private double relevanceScoreCosine;
     private Object uniqueIdentifier;
 
+
+	public double getBm25() {
+		return bm25;
+	}
+
+	public void setBm25(double bm25) {
+		this.bm25 = bm25;
+	}
 
 	public double getLtc() {
 		return ltc;
@@ -37,11 +46,11 @@ public class SearchResult {
         this.uniqueIdentifier = uniqueIdentifier;
     }
 
-    public double getRelevanceScore() {
-        return relevanceScore;
+    public double getRelevanceScoreCosine() {
+        return relevanceScoreCosine;
     }
 
-    public void setRelevanceScore(double relevanceScore) {
-        this.relevanceScore = relevanceScore;
+    public void setRelevanceScoreCosine(double relevanceScoreCosine) {
+        this.relevanceScoreCosine = relevanceScoreCosine;
     }
 }
