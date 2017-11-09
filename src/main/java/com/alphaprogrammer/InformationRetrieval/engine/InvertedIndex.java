@@ -99,11 +99,13 @@ public class InvertedIndex implements TextSearchIndex {
                         double cosine = computeCosine(pdm, doc);
                         double ltn=computeLtn(pdm, doc);
                         double ltc=computeLtc(pdm, doc);
+                        double bm25=computeBm25(pdm, doc);
                         SearchResult result = new SearchResult();
                         result.setLtn(ltn);
                         result.setLtc(ltc);
                         //QId?
                         result.setRelevanceScoreCosine(cosine);
+                        result.setBm25(bm25);
                         result.setUniqueIdentifier(doc.getUniqueId());
                         resultsP.add(result);
                     }
@@ -127,7 +129,7 @@ public class InvertedIndex implements TextSearchIndex {
                 orderedBy(new Comparator<SearchResult>() {
                     @Override
                     public int compare(SearchResult o1, SearchResult o2) {
-                        if (o1.getRelevanceScoreCosine() <= o2.getRelevanceScoreCosine()) {
+                        if (o1.getBm25() <= o2.getBm25()) {
                             return 1;
                         } else {
                             return -1;
@@ -212,6 +214,24 @@ public class InvertedIndex implements TextSearchIndex {
             ltc= ltc + term;
         }
         return ltc;
+    }
+    
+    private double computeBm25(ParsedDocumentMetrics searchDocMetrics, ParsedDocument d2) {
+        double bm25 = 0;
+
+        Set<String> wordSet = searchDocMetrics.getDocument().getUniqueWords();
+        ParsedDocument otherDocument = d2;
+        //je veux que wordset soit petite c'est la query;)
+        if (d2.getUniqueWords().size() < wordSet.size()) {
+            wordSet = d2.getUniqueWords();
+            otherDocument = searchDocMetrics.getDocument();
+        }
+        for (String word : wordSet) {
+
+            double term = docToMetrics.get(d2).getBm25(word);
+            bm25= bm25 + term;
+        }
+        return bm25;
     }
 
     public Map<String, DocumentPostingCollection> getTermToPostings() {

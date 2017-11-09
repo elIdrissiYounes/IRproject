@@ -64,7 +64,7 @@ class main {
         int j=0;
         // a enlever
      for(j=0;j<1;j++){
-    	 String string="/home/younes/workspaceEE/SimpleTextSearch-master/IbrahimAlexisKevinYouness_"+"03_"+j+"_cosine_"+"articles"+".txt";
+    	 String string="/home/younes/workspaceEE/SimpleTextSearch-master/IbrahimAlexisKevinYouness_"+"03_"+j+"_bm25_"+"articles"+".txt";
         File sortiee = new File(string);
         
         LineIterator it = FileUtils.lineIterator(fQueries, "UTF-8");
@@ -80,13 +80,14 @@ class main {
  			int rank=1;
  			for (SearchResult result : batch.getSearchResults()) {
  				String[] arr=line.split(" ",2);
- 				String linee = arr[0]+ "" + " Q0 "+result.getUniqueIdentifier() +" "+ rank + " " + result.getRelevanceScoreCosine() + " "
+ 				String linee = arr[0]+ "" + " Q0 "+result.getUniqueIdentifier() +" "+ rank + " " + result.getBm25() + " "
  						+ "IbrahimAlexisKevinYouness" + " " + "/article[1]\n";
                  System.out.println("----------\n\n");
                  FileUtils.write(sortiee, linee, "UTF-8", true);
                  System.out.println("score = " + result.getRelevanceScoreCosine());
                  System.out.println("ltn = " + result.getLtn());
                  System.out.println("ltc = " + result.getLtc());
+                 System.out.println("bm25 = " + result.getBm25());
                  rank++;
              }
  			 System.out.println("finished searching took: " + sw.toString());
