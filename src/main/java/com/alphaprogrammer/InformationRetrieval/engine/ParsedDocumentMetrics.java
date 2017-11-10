@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lucene.analysis.tokenattributes.TermToBytesRefAttribute;
 
 /**
  * Created by younes on 6/11/17.
