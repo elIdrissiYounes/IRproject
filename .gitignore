@@ -14,3 +14,7 @@
 # Maven
 log/
 target/
+
+runsSaved/
+filesIn/
+filesOut/
