@@ -19,6 +19,10 @@ Il existe deux main pour l'application :
 * Le premier main : main.java est celui qui correspond a la collection de documents text.
 * Le deuxieme main : XmlMain.java est celui qui correspond a la collection de documents xml.
 
+## Nom de groupes pour les runs
+
+IbrahimAlexisKevinYouness
+
 ## Authors
 
 * **Ibrahim BERZHOUD**
