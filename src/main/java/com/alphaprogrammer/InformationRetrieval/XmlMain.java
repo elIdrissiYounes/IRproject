@@ -30,7 +30,7 @@ class XmlMain {
 
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
             NodeList nList = doc.getElementsByTagName("article");
 
@@ -52,7 +52,7 @@ class XmlMain {
         sw.start();
         TextSearchIndex index = SearchIndexFactory.buildIndex(documentList);
         sw.stop();
-        System.out.println("finished building index took " + sw.toString());
+        System.out.println("finished building index took: " + sw.toString());
         System.out.println("num documents: " + index.numDocuments());
         System.out.println("num terms: " + index.termCount());
 
@@ -90,6 +90,7 @@ class XmlMain {
                 System.out.println("num documents searched: " + batch.getStats().getDocumentsSearched());
 
             }
+            System.out.println("\n\nEnd the run was created (See the filesOut/xmlFiles)");
         }
         finally {
             LineIterator.closeQuietly(it);
