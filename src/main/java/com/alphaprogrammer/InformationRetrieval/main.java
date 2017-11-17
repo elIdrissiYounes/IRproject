@@ -112,6 +112,7 @@ class main {
          * sw.start();
          * SearchResultBatch batch = index.search(searchTerm, 3);
          * sw.stop();
+         * lol
          * System.out.println("printing results for term: " + searchTerm);
          * for (SearchResult result : batch.getSearchResults()) {
          * System.out.println("----------\n\n");
