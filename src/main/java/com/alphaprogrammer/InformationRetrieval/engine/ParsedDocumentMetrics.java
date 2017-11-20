@@ -52,7 +52,7 @@ public class ParsedDocumentMetrics {
          if (wordFreq == 0) {
              return 0;
          }
-         return getInverseDocumentFrequency(word) * ( (document.getWordFrequency(word)*(k1+1)) / (document.getWordFrequency(word) + k1 * (1-b+b * ((corpus.size()/ (termsToPostings.keySet().size() / corpus.size())) ) )));
+         return getInverseDocumentFrequencyForBM(word) * ( (document.getWordFrequency(word)*(k1+1)) / (document.getWordFrequency(word) + k1 * (1-b+b * ((document.getUniqueWords().size()/ (termsToPostings.keySet().size() / corpus.size())) ) )));
      
 	}
 
@@ -85,7 +85,7 @@ public class ParsedDocumentMetrics {
         if (magnitude == null) {
             double sumOfSquares = 0;
             for (String word : document.getUniqueWords()) {
-                double d = getTfidf(word);
+                double d = getTfidfLtc(word);
                 sumOfSquares += d * d;
             }
 
@@ -118,6 +118,11 @@ public class ParsedDocumentMetrics {
         double totalNumDocuments = corpus.size();
         double numDocsWithTerm = numDocumentsTermIsIn(word);
         return Math.log((totalNumDocuments) / (numDocsWithTerm));
+    }
+    private double getInverseDocumentFrequencyForBM(String word) {
+        double totalNumDocuments = corpus.size();
+        double numDocsWithTerm = numDocumentsTermIsIn(word);
+        return Math.log((totalNumDocuments-numDocsWithTerm+0.5) / (numDocsWithTerm+0.5));
     }
 
     private int numDocumentsTermIsIn(String term) {

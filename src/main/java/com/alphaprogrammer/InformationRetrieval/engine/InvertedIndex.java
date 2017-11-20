@@ -215,6 +215,23 @@ public class InvertedIndex implements TextSearchIndex {
         }
         return ltc;
     }
+    private double computeLtcCosine(ParsedDocumentMetrics searchDocMetrics, ParsedDocument d2) {
+        double ltc = 0;
+
+        Set<String> wordSet = searchDocMetrics.getDocument().getUniqueWords();
+        ParsedDocument otherDocument = d2;
+        //je veux que wordset soit petite c'est la query;)
+        if (d2.getUniqueWords().size() < wordSet.size()) {
+            wordSet = d2.getUniqueWords();
+            otherDocument = searchDocMetrics.getDocument();
+        }
+        for (String word : wordSet) {
+
+            double term = (docToMetrics.get(d2).getTfidfLtc(word)/docToMetrics.get(d2).getMagnitude());
+            ltc= ltc + term;
+        }
+        return ltc;
+    }
     
     private double computeBm25(ParsedDocumentMetrics searchDocMetrics, ParsedDocument d2) {
         double bm25 = 0;
