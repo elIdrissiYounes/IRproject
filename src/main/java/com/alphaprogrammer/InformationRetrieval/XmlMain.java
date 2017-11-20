@@ -60,7 +60,7 @@ class XmlMain {
         // int j=0;
         // for(j=0;j<6;j++){
         String string = "filesOut/xmlFiles/IbrahimAlexisKevinYouness_" + "03_" + 0
-                        + "_bm25_" + "articles.xml.k1.2b0.7" + ".txt";
+                        + "_bm25_" + "articles.k1.2b0.7" + ".txt";
         File sortiee = new File(string);
 
         LineIterator it = FileUtils.lineIterator(fQueries, "UTF-8");
