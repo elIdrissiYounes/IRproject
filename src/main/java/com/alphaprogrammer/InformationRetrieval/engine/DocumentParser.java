@@ -59,12 +59,13 @@ public class DocumentParser {
         List<DocumentTerm> retVal = new ArrayList<>();
         int pos = 0;
         for (String str : terms) {
-            String stemmedTerm = TextParseUtils.stemWord(str);
+            String stemmedTerm =
+            		TextParseUtils.stemWord(str);
 
             // remove stop words
-         /*   if (StopWordHelper.isStopWord(stemmedTerm)) {
+          if (StopWordHelper.isStopWord(stemmedTerm)) {
                 continue;
-            }*/
+            }
 
             String strToUse = stemmedTerm;
 

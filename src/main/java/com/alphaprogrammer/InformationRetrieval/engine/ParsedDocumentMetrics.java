@@ -3,6 +3,7 @@ package com.alphaprogrammer.InformationRetrieval.engine;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -19,6 +20,7 @@ public class ParsedDocumentMetrics {
     private ImmutableMap<String, Double> tfidfCache;
     private ImmutableMap<String, Double> tfidfLtcCache;
     private ImmutableMap<String, Double> tfidfBm25Cache;
+    private double avdlcach;
 
     public ParsedDocumentMetrics(Corpus corpus, ParsedDocument document,
                                  ImmutableMap<String, DocumentPostingCollection> termsToPostings) {
@@ -28,7 +30,13 @@ public class ParsedDocumentMetrics {
         Map<String, Double> tfm = new HashMap<>();
         Map<String, Double> tfml = new HashMap<>();
         Map<String, Double> tfmTfBm25 = new HashMap<>();
-
+        //avdl
+        double avdl=0.0;
+        for (ParsedDocument psdoc:corpus.getParsedDocuments()) {
+    		avdl=avdl+psdoc.getUniqueWords().size();
+    	}
+    	avdl=avdl/corpus.size();
+    	this.avdlcach=avdl;
         //init tfidf cache
         for (String word : document.getUniqueWords()) {
             tfm.put(word, calcTfidf(word));
@@ -45,15 +53,15 @@ public class ParsedDocumentMetrics {
     }
 
     private double calcBM(String word) { 
-    	 double k1 = 1.2;
+    	 double k1 = 1.5;
     	 double b = 0.5;
-System.out.println(document.getUniqueWords().size());
-System.out.println(termsToPostings.keySet().size());
+	
+	//System.out.println((termsToPostings.keySet().size() / corpus.size()));
     	 int wordFreq = document.getWordFrequency(word);
          if (wordFreq == 0) {
              return 0;
          }
-         return getInverseDocumentFrequencyForBM(word) * ( (document.getWordFrequency(word)*(k1+1)) / (document.getWordFrequency(word) + k1 * (1-b+b * ((document.getUniqueWords().size()/ (termsToPostings.keySet().size() / corpus.size())) ) )));
+         return getInverseDocumentFrequencyForBM(word) * ( document.getWordFrequency(word)*(k1+1) / (document.getWordFrequency(word) + k1 * (1-b+b * ((document.getUniqueWords().size()/ avdlcach) ) )));
      
 	}
 

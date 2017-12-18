@@ -96,15 +96,15 @@ public class InvertedIndex implements TextSearchIndex {
                 @Override
                 public void run() {
                     for (ParsedDocument doc : partition) {
-                        double cosine = computeCosine(pdm, doc);
-                        double ltn=computeLtn(pdm, doc);
-                        double ltc=computeLtcCosine(pdm, doc);
+                        //double cosine = computeCosine(pdm, doc);
+                       // double ltn=computeLtn(pdm, doc);
+                        //double ltc=computeLtcCosine(pdm, doc);
                         double bm25=computeBm25(pdm, doc);
                         SearchResult result = new SearchResult();
-                        result.setLtn(ltn);
-                        result.setLtc(ltc);
+                        //result.setLtn(ltn);
+                        //result.setLtc(ltc);
                         //QId?
-                        result.setRelevanceScoreCosine(cosine);
+                        //result.setRelevanceScoreCosine(cosine);
                         result.setBm25(bm25);
                         result.setUniqueIdentifier(doc.getUniqueId());
                         result.setXpath(doc.getPath());

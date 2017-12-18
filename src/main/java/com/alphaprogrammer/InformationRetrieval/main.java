@@ -62,8 +62,8 @@ class main {
         // int j=0;
         // a enlever
         // for(j=0;j<1;j++){
-        String string = "filesOut/textFiles/IbrahimAlexisKevinYouness_" + "03_" + 0
-                        + "_bm25_" + "articles.k1.2b0.7" + ".txt";
+        String string = "filesOut/textFiles/IbrahimAlexisKevinYouness_" + "05_" + 0
+                        + "_bm25_" + "articles.k1.6b0.4" + ".txt";
         File sortiee = new File(string);
 
         LineIterator it = FileUtils.lineIterator(fQueries, "UTF-8");

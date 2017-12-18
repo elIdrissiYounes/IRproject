@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.*;
 
 class XmlMain {
-	
+	private static int THREAD_POOL_SIZE = Math.max(1, Runtime.getRuntime().availableProcessors());
 	private static int getOrder(Node node) {
 		String name = node.getNodeName();
 		int cpt = 1;
@@ -46,6 +46,9 @@ class XmlMain {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         List<Document> documentList = new ArrayList<>();
+        
+        
+        
         for (File fXmlFile : directoryListing) {
 
             
@@ -69,7 +72,7 @@ class XmlMain {
             //String body = e.getElementsByTagName("bdy").item(0).getTextContent().toString();
             boolean sectionsLeft = true;
 			int sCpt = 1;
-			loop: while (sectionsLeft) {
+			/*loop: while (sectionsLeft) {
 				String expression = "//sec[" + sCpt + "]";
 				String content = (String) path.evaluate(expression, root);
 				Node node = (Node) path.evaluate(expression, root, XPathConstants.NODE);
@@ -85,16 +88,72 @@ class XmlMain {
 					Document document = new Document(content, id,xpath);
 		            documentList.add(document);
 				
-		            idToBody.put(xpath, content);
+		            //idToBody.put(xpath, content);
 		            sCpt++;
 				}
 				
 				
+			}*/
+            
+			loop: while (sectionsLeft) {
+				String expression = "//bdy[1]/p[" + sCpt + "]";
+				String content = (String) path.evaluate(expression, root);
+				Node node = (Node) path.evaluate(expression, root, XPathConstants.NODE);
+				content = content.trim().replaceAll(" +", " ");
+				if (content.isEmpty() || content.equals(" "))
+					break loop;
+				else {
+					String xpath = getXpath(node);
+					StringBuilder xpathb = new StringBuilder(xpath);
+					xpathb.setCharAt(21, '1');
+					xpath = xpathb.toString();
+					xpath = xpath.substring(13, xpath.length() - 1);
+					Document document = new Document(content, id,xpath);
+		            documentList.add(document);
+		            sCpt++;
+					
+				}
 			}
-            
+			
 
+			// sec/p
+			sectionsLeft = true;
+			boolean paragraphsLeft = true;
+			sCpt = 1;
+			int pCpt = 1;
+			loops: while (sectionsLeft) {
+				String expression = "//sec[" + sCpt + "]";
+				String content = (String) path.evaluate(expression, root);
+				content = content.trim().replaceAll(" +", " ");
+				if (content.isEmpty() || content.equals(" "))
+					break loops;
+				else {
+					loopp: while (paragraphsLeft) {
+						expression = "//sec[" + sCpt + "]//p[" + pCpt + "]";
+						content = (String) path.evaluate(expression, root);
+						Node node = (Node) path.evaluate(expression, root, XPathConstants.NODE);
+						content = content.trim().replaceAll(" +", " ");
+						if (content.isEmpty() || content.equals(" ")) {
+							break loopp;
+						} else {
+							String xpath = getXpath(node);
+							StringBuilder xpathb = new StringBuilder(xpath);
+							xpathb.setCharAt(21, '1');
+							xpath = xpathb.toString();
+							xpath = xpath.substring(11, xpath.length() - 1);
+							Document document = new Document(content, id,xpath);
+				            documentList.add(document);
+							pCpt++;
+						}
+					}
+					sCpt++;
+					pCpt = 1;
+				}
+			}
+		
+			
+			
             
-
         }
         Stopwatch sw = Stopwatch.createUnstarted();
         sw.start();
@@ -107,8 +166,8 @@ class XmlMain {
         File fQueries = new File("filesIn/request.txt");
         // int j=0;
         // for(j=0;j<6;j++){
-        String string = "filesOut/xmlFiles/IbrahimAlexisKevinYouness_" + "05_" + 111
-                        + "_bm25_k1.2b0.5" + "articles" + ".txt";
+        String string = "filesOut/xmlFiles/IbrahimAlexisKevinYouness_" + "05_" + 4
+                        + "_bm25_k1.5b0.5" + "p" + ".txt";
         File sortiee = new File(string);
 
         LineIterator it = FileUtils.lineIterator(fQueries, "UTF-8");
@@ -129,16 +188,14 @@ class XmlMain {
                                    + result.getBm25() + " " + "IbrahimAlexisKevinYouness" + " " + result.getXpath()+"\n";
                     System.out.println("----------\n\n");
                     FileUtils.write(sortiee, linee, "UTF-8", true);
-                    System.out.println("score = " + result.getRelevanceScoreCosine());
-                    System.out.println("ltn = " + result.getLtn());
-                    System.out.println("ltc = " + result.getLtc());
                     System.out.println("bm25 = " + result.getBm25());
                     rank++;
                 }
-                System.out.println("finished searching took: " + sw.toString());
+                
                 System.out.println("num documents searched: " + batch.getStats().getDocumentsSearched());
 
             }
+            System.out.println("finished searching took: " + sw.toString());
             System.out.println("\n\nEnd the run was created (See the filesOut/xmlFiles)");
         }
         finally {
