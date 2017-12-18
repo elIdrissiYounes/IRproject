@@ -4,4 +4,4 @@
 2009073 : web link network analysis
 2009074 : web ranking scoring algorithm
 2009078 : supervised machine learning algorithm
-2009085 : operating system +mutual +exclusion 
+2009085 : operating system mutual exclusion 

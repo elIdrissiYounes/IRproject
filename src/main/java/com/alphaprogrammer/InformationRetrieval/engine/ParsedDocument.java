@@ -15,16 +15,20 @@ import java.util.Set;
  */
 public class ParsedDocument {
 
-    private ImmutableList<DocumentTerm> documentTerms;
+    
+
+	private ImmutableList<DocumentTerm> documentTerms;
     private ImmutableMap<String, Integer> wordFrequencyMap;
     private ImmutableSet<String> uniqueWords;
     private Object uniqueId;
+    private String path;
 
-    public ParsedDocument(List<DocumentTerm> documentTerms, Object uniqueId) {
+    public ParsedDocument(List<DocumentTerm> documentTerms, Object uniqueId,String path) {
         Preconditions.checkNotNull(uniqueId);
         Preconditions.checkNotNull(documentTerms);
         this.documentTerms = ImmutableList.copyOf(documentTerms);
         this.uniqueId = uniqueId;
+        this.path=path;
         HashMap<String, Integer> wordFrequency = new HashMap<>();
         uniqueWords = null;
 
@@ -42,7 +46,7 @@ public class ParsedDocument {
         wordFrequencyMap = ImmutableMap.copyOf(wordFrequency);
         uniqueWords = ImmutableSet.copyOf(getUniqueWordsHashSet());
     }
-
+    
 
     public int getWordFrequency(String word) {
         if (!wordFrequencyMap.containsKey(word)) {
@@ -72,8 +76,11 @@ public class ParsedDocument {
         }
         return w;
     }
-
+   
     public Object getUniqueId() {
         return uniqueId;
     }
+    public String getPath() {
+		return path;
+	}
 }

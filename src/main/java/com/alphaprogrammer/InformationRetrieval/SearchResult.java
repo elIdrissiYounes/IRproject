@@ -7,7 +7,7 @@ public class SearchResult {
 	private double ltn;
 	private double ltc;
 	private double bm25;
-
+	private String xpath;
 	private double relevanceScoreCosine;
     private Object uniqueIdentifier;
 
@@ -53,4 +53,12 @@ public class SearchResult {
     public void setRelevanceScoreCosine(double relevanceScoreCosine) {
         this.relevanceScoreCosine = relevanceScoreCosine;
     }
+
+	public String getXpath() {
+		return xpath;
+	}
+
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
 }

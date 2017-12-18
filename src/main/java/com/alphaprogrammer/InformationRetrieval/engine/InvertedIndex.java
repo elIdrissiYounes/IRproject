@@ -98,7 +98,7 @@ public class InvertedIndex implements TextSearchIndex {
                     for (ParsedDocument doc : partition) {
                         double cosine = computeCosine(pdm, doc);
                         double ltn=computeLtn(pdm, doc);
-                        double ltc=computeLtc(pdm, doc);
+                        double ltc=computeLtcCosine(pdm, doc);
                         double bm25=computeBm25(pdm, doc);
                         SearchResult result = new SearchResult();
                         result.setLtn(ltn);
@@ -107,6 +107,7 @@ public class InvertedIndex implements TextSearchIndex {
                         result.setRelevanceScoreCosine(cosine);
                         result.setBm25(bm25);
                         result.setUniqueIdentifier(doc.getUniqueId());
+                        result.setXpath(doc.getPath());
                         resultsP.add(result);
                     }
                 }
@@ -244,7 +245,7 @@ public class InvertedIndex implements TextSearchIndex {
             otherDocument = searchDocMetrics.getDocument();
         }
         for (String word : wordSet) {
-
+        	
             double term = docToMetrics.get(d2).getBm25(word);
             bm25= bm25 + term;
         }

@@ -46,8 +46,9 @@ public class ParsedDocumentMetrics {
 
     private double calcBM(String word) { 
     	 double k1 = 1.2;
-    	 double b = 0.7;
-
+    	 double b = 0.5;
+System.out.println(document.getUniqueWords().size());
+System.out.println(termsToPostings.keySet().size());
     	 int wordFreq = document.getWordFrequency(word);
          if (wordFreq == 0) {
              return 0;

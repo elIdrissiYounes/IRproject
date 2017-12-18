@@ -30,10 +30,10 @@ public class DocumentParser {
     public ParsedDocument parseDocument(Document doc) {
         List<DocumentTerm> documentTerms = rawTextToTermList(doc.getRawText());
 
-        ParsedDocument document = new ParsedDocument(documentTerms, doc.getUniqueIdentifier());
+        ParsedDocument document = new ParsedDocument(documentTerms, doc.getUniqueIdentifier(),doc.getPath());
         return document;
     }
-
+   
     private List<DocumentTerm> rawTextToTermList(String rawText) {
         String text = rawText;
 
@@ -62,9 +62,9 @@ public class DocumentParser {
             String stemmedTerm = TextParseUtils.stemWord(str);
 
             // remove stop words
-            if (StopWordHelper.isStopWord(stemmedTerm)) {
+         /*   if (StopWordHelper.isStopWord(stemmedTerm)) {
                 continue;
-            }
+            }*/
 
             String strToUse = stemmedTerm;
 
